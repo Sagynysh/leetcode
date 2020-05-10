@@ -12,6 +12,86 @@ public class randomSample {
 
     }
 
+
+    public static int findJudge(int N, int[][] trust) {
+        int val[][] = new int [N+1] [2];
+        for(int i = 0; i < trust.length;i++){
+            val[trust[i][1]][0]++;
+            val[trust[i][0]][0]++;
+        }
+
+        for(int i = 1; i <= N;i++){
+            if(val[i][1] == 0 && val[i][0] >= N-1){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static boolean isPerfectSquare(int num) {
+        for(int i = 2;i*i <= num;i++){
+            if(num%i == 0 && num/i == i){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean checkStraightLine(int[][] coordinates) {
+        if(coordinates.length <= 2)
+            return true;
+        float g1 = crossProduct(coordinates[0],coordinates[1]);
+        for(int i=3;i<coordinates.length;i++){
+            if(g1 != crossProduct(coordinates[0],coordinates[i])){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static float crossProduct(int[] p1,int[] p2){
+        if(p2[0] - p1[0] == 0) return 0;
+        return (p2[1] - p1[1])/(p2[0] - p1[0]);
+
+    }
+
+    public int countPrimes(int n) {
+        boolean [] isPrime = new boolean[n];
+        for (int i = 2; i < n; i++) {
+            isPrime[i] = true;
+        }
+        for(int i = 2; i*i < n; i++){
+            if(!isPrime[i]){
+                continue;
+            }
+            for(int  j = i*i; j<n;j++){
+                isPrime[j] = false;
+            }
+        }
+
+        int count = 0;
+        for (int i = 2; i < n; i++) {
+            if (isPrime[i]) count++;
+        }
+        return count;
+    }
+
+    public static int majorityElement(int[] nums) {
+        Map<Integer,Integer> map = new HashMap<>();
+        for(int i=0;i<nums.length;i++){
+            if(map.containsKey(nums[i])){
+                map.put(nums[i],map.get(nums[i]) + 1);
+                if(map.get(nums[i]) > nums.length/2){
+                    return nums[i];
+                }
+            }else{
+                map.put(nums[i],1);
+            }
+        }
+        return nums[0];
+
+    }
+
     public static int findComplement(int num) {
         StringBuffer bin = new StringBuffer(Integer.toBinaryString(num));
         for(int i=0;i<bin.length();i++){
