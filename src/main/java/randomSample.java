@@ -12,6 +12,36 @@ public class randomSample {
 
     }
 
+1 1 1
+1 1 0
+1 0 1
+
+    public static int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
+        if(newColor != image[sr][sc]){
+            return recCall(image,sr,sc,newColor,image[sr][sc]);
+        }else{
+            return image;
+        }
+
+    }
+
+    public static int[][] recCall(int[][] image, int sr, int sc, int newColor, int oldColor){
+        image[sr][sc] = newColor;
+        if(sr-1 >= 0 && image[sr-1][sc] == oldColor){
+            recCall(image,sr-1,sc,newColor,oldColor);
+        }
+        if(sc-1 >= 0 && image[sr][sc-1] == oldColor){
+            recCall(image,sr,sc-1,newColor,oldColor);
+        }
+        if(sr+1 < image.length && image[sr+1][sc] == oldColor){
+            recCall(image,sr+1,sc,newColor,oldColor);
+        }
+        if(sc+1 < image[0].length && image[sr][sc+1] == oldColor){
+            recCall(image,sr,sc+1,newColor,oldColor);
+        }
+        return image;
+    }
+
 
     public static int findJudge(int N, int[][] trust) {
         int val[][] = new int [N+1] [2];
