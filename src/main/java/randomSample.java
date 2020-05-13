@@ -25,6 +25,39 @@ public class randomSample {
 
     }
 
+    public static boolean isPowerOfThree(int n) {
+        if(n%3!=0){
+            return false;
+        }
+
+        int i = 3;
+        while(i<=n){
+            i = i*3;
+            if(i == n){
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+
+    public static int singleNonDuplicate(int[] nums) {
+        int c = 1;
+        for(int i=0;i<nums.length-1;i++){
+            if(c == 1 && nums[i] != nums[i+1]){
+                return nums[i];
+            }
+
+            if(nums[i] == nums[i+1]){
+                c++;
+            }else{
+                c = 1;
+            }
+        }
+        return 0;
+    }
+
     public static int[][] recCall(int[][] image, int sr, int sc, int newColor, int oldColor){
         image[sr][sc] = newColor;
         if(sr-1 >= 0 && image[sr-1][sc] == oldColor){
