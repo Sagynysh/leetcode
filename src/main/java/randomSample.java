@@ -7,9 +7,100 @@ import java.util.stream.Collectors;
 public class randomSample {
     public static void main(String[] args) {
 //        System.out.println(removeDuplicates(new int[]{0,0,1,1,1,2,2,3,3,4}));
-        System.out.println(findComplement(5));
+        int [] a = {5, -3, 5};
+//        System.out.println(maxSubarraySumCircular(a));
+
+    }
 
 
+    public static boolean checkInclusion(String s1, String s2) {
+        Map<Character,int[]> map = new HashMap<>();
+        for(char c:s1.toCharArray()){
+            if(map.containsKey(c)){
+                map.get(c)[0]+=1;
+            }else{
+                map.put(c,new int[]{0,0});
+            }
+        }
+
+        int i = 0;
+        while(i< s2.length()){
+            Map<Character,int[]> tmp = new HashMap<>();
+            int j = 0;
+            while(j<s1.length() && i+s1.length()<=s2.length() && map.containsKey(s2.charAt(i+j))){
+                System.out.println(i+j);
+                System.out.println("contains "+tmp.containsKey(s2.charAt(i+j)));
+                if(tmp.containsKey(s2.charAt(i+j))){
+                    tmp.get(s2.charAt(i+j))[0]+=1;
+                    System.out.println("val "+tmp.get(s2.charAt(i+j))[0]);
+                }else{
+                    tmp.put(s2.charAt(i+j),new int[]{1,0});
+                    System.out.println("val "+tmp.get(s2.charAt(i+j))[0]);
+                }
+                j++;
+            }
+            System.out.println("tmp "+tmp.size()+" - "+j);
+            if(j != s1.length() || tmp.size() != map.size()){
+                tmp = null;
+            }
+
+            if(isMapEqual(map,tmp)){
+                return true;
+            }
+
+            if(j != 0){
+                i+=j;
+            }else{
+                i++;
+            }
+        }
+        return false;
+
+    }
+
+    public static boolean isMapEqual(Map<Character,int[]> map1,Map<Character,int[]> map2){
+        if(map2 == null || map1.size()!=map2.size()){
+            return false;
+        }
+        for(Character key:map1.keySet()){
+            if(!map2.containsKey(key) || map1.get(key)[0] != map2.get(key)[0]){
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    public int maxSubarraySumCircular(int[] A) {
+        int kadane = kadane(A);
+        int maxWithCorner = 0;
+
+        for(int i =0;i<A.length;i++){
+            maxWithCorner+=A[i];
+            A[i] = -A[i];
+        }
+        maxWithCorner = maxWithCorner+kadane(A);
+        if(maxWithCorner == 0){
+            return kadane;
+        }
+        return (maxWithCorner<kadane) ? kadane : maxWithCorner;
+    }
+
+    public int kadane(int[] A){
+        int max_value = Integer.MIN_VALUE;
+        int sum = 0;
+        int startIndex = 0;
+        for(int i =0;i<2*A.length-1;i++){
+            sum+=A[i%A.length];
+            if(i-startIndex<A.length && max_value<sum){
+                max_value = sum;
+            }
+            if(sum<0){
+                sum = 0;
+                startIndex = i;
+            }
+        }
+        return max_value;
     }
 
     public String removeKdigits(String num, int k) {
