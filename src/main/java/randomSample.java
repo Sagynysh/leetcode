@@ -13,6 +13,44 @@ public class randomSample {
     }
 
 
+    public static int countSquares(int[][] matrix) {
+        int result = 0;
+//        int tmp[][] = new int[matrix.length][matrix[0].length];
+        int n = matrix.length;
+        int m = matrix[0].length;
+        for(int i =1;i<n;i++){
+            for(int j =1; j < m;j++){
+                int a = matrix[i][j];
+                int b = matrix[i-1][j];
+                int c = matrix[i-1][j-1];
+                int d = matrix[i][j-1];
+                if(a != 0){
+                    matrix[i][j]+=minBtw4(b,c,d);
+                }
+            }
+        }
+
+        for(int i =0;i<n;i++){
+            for(int j =0; j < m ;j++){
+                System.out.print(matrix[i][j]+" ");
+            }
+            System.out.println();
+        }
+        for(int i =0;i<n;i++){
+            for(int j =0; j < m ;j++){
+                result+=matrix[i][j];
+            }
+        }
+        return result;
+    }
+    
+    public static int minBtw4(int b,int c,int d){
+        return Math.min(b,Math.min(c,d));
+    }
+
+
+
+
     public static boolean checkInclusion(String s1, String s2) {
         Map<Character,int[]> map = new HashMap<>();
         for(char c:s1.toCharArray()){
