@@ -1,3 +1,4 @@
+import scala.Char;
 import scala.Int;
 
 import java.math.BigInteger;
@@ -9,6 +10,91 @@ public class randomSample {
 //        System.out.println(removeDuplicates(new int[]{0,0,1,1,1,2,2,3,3,4}));
         int [] a = {5, -3, 5};
 //        System.out.println(maxSubarraySumCircular(a));
+
+    }
+
+
+    public static TreeNode bstFromPreorder(int[] preorder) {
+        TreeNode root = new TreeNode(preorder[0]);
+        TreeNode tmp = root;
+        for(int i=1;i<preorder.length;i++){
+            findPlaceInTree(tmp,preorder[i]);
+        }
+        return root;
+    }
+
+    public static void findPlaceInTree(TreeNode tmp,int val){
+        while(tmp!=null){
+            if(tmp.val > val){
+                if(tmp.left!=null){
+                    tmp = tmp.left;
+                }else{
+                    tmp.left = new TreeNode(val);
+                    return;
+                }
+            }else{
+                if(tmp.right!=null){
+                    tmp = tmp.right;
+                }else{
+                    tmp.right = new TreeNode(val);
+                    return;
+                }
+            }
+        }
+    }
+
+
+    public static String frequencySort(String s) {
+        Map<Character,Integer> map = new HashMap<>();
+        for(char ch:s.toCharArray()){
+            if (map.containsKey(ch)){
+                map.put(ch,map.get(ch)+1);
+            }else{
+                map.put(ch,1);
+            }
+        }
+
+
+        List<Map.Entry<Character,Integer>> list = new ArrayList<Map.Entry<Character,Integer>>(map.entrySet());
+        Collections.sort(list,
+                new Comparator<Map.Entry<Character,Integer>>() {
+                    public int compare(Map.Entry<Character,Integer> a, Map.Entry<Character,Integer> b) {
+                        return Integer.compare(b.getValue(), a.getValue());
+                    }
+                }
+                );
+
+        StringBuilder sb = new StringBuilder();
+        for(Map.Entry<Character,Integer> entry: list){
+            sb.append(charMultiply(entry.getKey(),entry.getValue()));
+        }
+        return sb.toString();
+    }
+
+    public static StringBuilder charMultiply(Character ch,int c){
+        StringBuilder sb = new StringBuilder();
+        for(int i=0;i<c;i++){
+            sb.append(ch);
+        }
+        return sb;
+    }
+
+    public class StringCounter{
+        private char ch;
+        private int counter = 0;
+
+        public StringCounter(char ch){
+            this.ch = ch;
+            counter = 1;
+        }
+
+        public void incr(){
+            counter++;
+        }
+
+        public int getCounter(){
+            return counter;
+        }
 
     }
 
@@ -43,7 +129,7 @@ public class randomSample {
         }
         return result;
     }
-    
+
     public static int minBtw4(int b,int c,int d){
         return Math.min(b,Math.min(c,d));
     }
