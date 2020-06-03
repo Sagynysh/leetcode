@@ -1,3 +1,4 @@
+import leetcode.randomSample;
 import org.junit.Before;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -5,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class randomSampleTest {
-    private static randomSample randomSample;
+    private static leetcode.randomSample randomSample;
 
     @Before
     public void testBefore(){
